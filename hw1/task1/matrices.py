@@ -14,13 +14,15 @@ class Matrix:
         return str(self.content)
 
     def __add__(self, other):
-        return Matrix(*[get_vector_sum(x, y) for x, y in zip(self.content, other.content)])
+        return Matrix(
+            *[get_vector_sum(x, y) for x, y in zip(self.content, other.content)]
+        )
 
     def get_dimensions(self):
-        return {'columns': len(self.content), 'rows': len(self.content[0])}
+        return {"columns": len(self.content), "rows": len(self.content[0])}
 
     def __mul__(self, other):
-        if self.get_dimensions()['rows'] != other.get_dimensions()['columns']:
+        if self.get_dimensions()["rows"] != other.get_dimensions()["columns"]:
             raise TypeError("Matrices can't be multiplied")
         new = []
         other_transposed = transpose(other)
