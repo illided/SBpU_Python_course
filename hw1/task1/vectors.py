@@ -5,7 +5,7 @@ from typing import List, Union
 Vector = List[Union[int, float]]
 
 
-def scalar(first: Vector, second: Vector) -> int or float:
+def scalar(first: Vector, second: Vector) -> Union[int, float]:
     if len(first) != len(second):
         raise ArithmeticError("Vectors must be the same length")
     return sum([x * y for x, y in zip(first, second)])
