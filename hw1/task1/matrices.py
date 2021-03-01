@@ -14,9 +14,7 @@ class Matrix:
         return str(self.content)
 
     def __add__(self, other):
-        return Matrix(
-            *[get_vector_sum(x, y) for x, y in zip(self.content, other.content)]
-        )
+        return Matrix(*[get_vector_sum(x, y) for x, y in zip(self.content, other.content)])
 
     def get_dimensions(self):
         return {"columns": len(self.content), "rows": len(self.content[0])}
