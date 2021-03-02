@@ -1,5 +1,5 @@
 import unittest
-from hw1.task1.vectors import *
+from solutions.hw1.task1.vectors import *
 from math import pi
 
 
