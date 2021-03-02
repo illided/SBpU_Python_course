@@ -1,4 +1,4 @@
-from vectors import Vector, get_vector_sum, scalar
+from solutions.hw1.task1.vectors import Vector, get_vector_sum, scalar
 from typing import List
 import copy
 
@@ -12,6 +12,9 @@ class Matrix:
         if not all(len(first) == len(vector) for vector in args):
             raise TypeError("Rows must be the same length")
         self.content = [first, *args]
+
+    def __eq__(self, other):
+        return self.content == other.content
 
     def __str__(self):
         return str(self.content)
