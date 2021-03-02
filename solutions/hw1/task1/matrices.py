@@ -1,4 +1,4 @@
-from vectors import *
+from vectors import Vector, get_vector_sum, scalar
 from typing import List
 import copy
 
