@@ -1,13 +1,13 @@
 import math
 
-from typing import List, Union
+from typing import List
 
-Vector = List[Union[int, float]]
+Vector = List[float]
 
 
-def scalar(first: Vector, second: Vector) -> Union[int, float]:
+def scalar(first: Vector, second: Vector) -> float:
     if len(first) != len(second):
-        raise ArithmeticError("Vectors must be the same length")
+        raise TypeError("Vectors must be the same length")
     return sum([x * y for x, y in zip(first, second)])
 
 
@@ -16,6 +16,8 @@ def module(vector: Vector) -> float:
 
 
 def angle(first: Vector, second: Vector) -> float:
+    if len(first) != len(second):
+        raise ArithmeticError("Vectors must be the same length")
     return math.acos(scalar(first, second) / (module(first) * module(second)))
 
 
