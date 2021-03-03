@@ -3,6 +3,9 @@ from solutions.hw1.task1.matrices import Matrix, transpose
 
 
 class MyTestCase(unittest.TestCase):
+    def test_init_with_empty_vectors(self):
+        self.assertRaises(TypeError, Matrix, [], [], [])
+
     def test_get_dimensions(self):
         self.assertEqual({"rows": 3, "columns": 2}, Matrix([1, 8], [-6, 2], [2, 2]).get_dimensions())
 
