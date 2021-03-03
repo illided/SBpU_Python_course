@@ -2,18 +2,19 @@ import os
 
 
 def wc(first: str, *args: str):
-    def wc_for_one(filepath: str):
+    def wc_for_one(filepath: str) -> dict:
         size = os.path.getsize(filepath)
-        f = open(filepath)
-        words = 0
-        lines = 0
-        for line in f:
-            lines += 1
-            words += len(line.split())
-        f.close()
+        with open(filepath) as f:
+            words, lines = 0, 0
+            for line in f:
+                lines += 1
+                words += len(line.split())
         return {"newlines": lines, "words": words, "bytes": size}
 
-    acc = {"newlines": 0, "words": 0, "bytes": 0}
+    def print_stats(dictionary: dict, f_name: str):
+        print("\t".join([str(x) for x in dictionary.values()]), "\t", f_name)
+
+    total = {"newlines": 0, "words": 0, "bytes": 0}
     files_not_found = []
     for filename in [first, *args]:
         try:
@@ -21,50 +22,48 @@ def wc(first: str, *args: str):
         except FileNotFoundError:
             files_not_found.append(filename)
             continue
-        print(str(file_wc) + "\t" + filename)
-        acc = {k: acc.get(k, 0) + file_wc.get(k, 0) for k in acc}
-    print(str(acc), "\ttotal")
+        print_stats(file_wc, filename)
+        total = {k: total.get(k, 0) + file_wc.get(k, 0) for k in total}
+    print_stats(total, "total")
     if files_not_found:
-        print("Files not found: ", end="")
-        for file in files_not_found:
-            print(file, end=", ")
+        print("Files not found: ", ", ".join(files_not_found))
 
 
-def nl(filepath: str):
-    try:
-        file = open(filepath)
-    except FileNotFoundError:
-        print("No such file: ", filepath)
-        return
+def nl(first: str, *filenames: str):
     count = 1
-    for line in file:
-        if line == "\n":
-            print()
-        else:
-            print(str(count) + " " + line, end="")
-            count += 1
-    file.close()
+    for filename in [first, *filenames]:
+        try:
+            with open(filename) as file:
+                for line in file:
+                    if line == "\n":
+                        print()
+                    else:
+                        print(str(count) + "\t" + line, end="")
+                        count += 1
+                print()
+        except FileNotFoundError:
+            print("nl: ", filename, ": No such file or directory")
 
 
-def head(filename: str, n=10):
+def head(filename: str, n: int = 10):
     try:
-        f = open(filename)
+        with open(filename) as file:
+            for line in file:
+                if n > 0:
+                    n -= 1
+                    print(line, end="")
+                else:
+                    break
     except FileNotFoundError:
         print("No such file: " + filename)
-        return
-    text = f.readlines()
-    cut = text[: len(text) - n if len(text) >= n else len(text)]
-    for line in cut:
-        print(line, end="")
 
 
-def tail(filename: str, n=10):
+def tail(filename: str, n: int = 10):
     try:
-        f = open(filename)
+        with open(filename) as file:
+            text = file.readlines()
+            cut = text[len(text) - n:]
+            for line in cut:
+                print(line, end="")
     except FileNotFoundError:
         print("No such file: " + filename)
-        return
-    text = f.readlines()
-    cut = text[len(text) - n if len(text) >= n else 0 :]
-    for line in cut:
-        print(line, end="")
