@@ -28,7 +28,7 @@ class Matrix:
         return {"columns": len(self.content[0]), "rows": len(self.content)}
 
     def __mul__(self, other):
-        if self.get_dimensions()["rows"] != other.get_dimensions()["columns"]:
+        if self.get_dimensions()["columns"] != other.get_dimensions()["rows"]:
             raise TypeError("Matrices can't be multiplied")
         return Matrix(*[[scalar(row, column) for column in transpose(other).content] for row in self.content])
 
