@@ -62,7 +62,7 @@ def tail(filename: str, n: int = 10):
     try:
         with open(filename) as file:
             text = file.readlines()
-            cut = text[len(text) - n:]
+            cut = text[len(text) - n :]
             for line in cut:
                 print(line, end="")
     except FileNotFoundError:
