@@ -37,7 +37,7 @@ class Matrix:
         return Matrix(*[[scalar(row, column) for column in transpose(other).content] for row in self.content])
 
 
-def transpose(matrix: Matrix, in_place=False) -> Matrix:
+def transpose(matrix: Matrix, in_place: bool = False) -> Matrix:
     transposed = [list(t) for t in zip(*matrix.content)]
     if in_place:
         matrix.content = transposed
