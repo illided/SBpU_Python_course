@@ -1,5 +1,5 @@
 from solutions.hw1.task1.vectors import Vector, get_vector_sum, scalar
-from typing import List
+from typing import List, Dict
 import copy
 
 
@@ -28,7 +28,7 @@ class Matrix:
             raise TypeError("Matrices must have the same dimensions")
         return Matrix(*[get_vector_sum(x, y) for x, y in zip(self.content, other.content)])
 
-    def get_dimensions(self) -> dict:
+    def get_dimensions(self) -> Dict[str, int]:
         return {"columns": len(self.content[0]), "rows": len(self.content)}
 
     def __mul__(self, other: "Matrix") -> "Matrix":
