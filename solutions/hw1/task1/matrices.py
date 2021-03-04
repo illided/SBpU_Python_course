@@ -13,21 +13,21 @@ class Matrix:
             raise TypeError("Rows must be the same length")
         self.content = [first, *args]
 
-    def __eq__(self, other):
+    def __eq__(self, other: "Matrix"):
         return self.content == other.content
 
     def __str__(self):
         return str(self.content)
 
-    def __add__(self, other):
+    def __add__(self, other: "Matrix") -> "Matrix":
         if self.get_dimensions() != other.get_dimensions():
             raise TypeError("Matrices must have the same dimensions")
         return Matrix(*[get_vector_sum(x, y) for x, y in zip(self.content, other.content)])
 
-    def get_dimensions(self):
+    def get_dimensions(self) -> dict:
         return {"columns": len(self.content[0]), "rows": len(self.content)}
 
-    def __mul__(self, other):
+    def __mul__(self, other: "Matrix") -> "Matrix":
         if self.get_dimensions()["columns"] != other.get_dimensions()["rows"]:
             raise TypeError("Matrices can't be multiplied")
         return Matrix(*[[scalar(row, column) for column in transpose(other).content] for row in self.content])

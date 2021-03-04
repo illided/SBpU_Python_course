@@ -17,7 +17,7 @@ def module(vector: Vector) -> float:
 
 def angle(first: Vector, second: Vector) -> float:
     if len(first) != len(second):
-        raise ArithmeticError("Vectors must be the same length")
+        raise TypeError("Vectors must be the same length")
     return math.acos(scalar(first, second) / (module(first) * module(second)))
 
 
