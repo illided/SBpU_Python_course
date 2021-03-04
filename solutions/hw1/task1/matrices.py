@@ -13,7 +13,11 @@ class Matrix:
             raise TypeError("Rows must be the same length")
         self.content = [first, *args]
 
-    def __eq__(self, other: "Matrix"):
+    def __eq__(self, other):
+        if not isinstance(other, Matrix):
+            raise NotImplementedError(
+                "An object of type matrix can only be compared with another object of type matrix"
+            )
         return self.content == other.content
 
     def __str__(self):
