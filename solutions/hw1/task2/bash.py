@@ -1,8 +1,10 @@
 import os
 
+from typing import Dict
+
 
 def wc(first: str, *args: str):
-    def wc_for_one(filepath: str) -> dict:
+    def wc_for_one(filepath: str) -> Dict[str, int]:
         size = os.path.getsize(filepath)
         with open(filepath) as f:
             words, lines = 0, 0
@@ -11,7 +13,7 @@ def wc(first: str, *args: str):
                 words += len(line.split())
         return {"newlines": lines, "words": words, "bytes": size}
 
-    def print_stats(dictionary: dict, f_name: str):
+    def print_stats(dictionary: Dict[str, int], f_name: str):
         print("\t".join([str(x) for x in dictionary.values()]), "\t", f_name)
 
     total = {"newlines": 0, "words": 0, "bytes": 0}
@@ -38,11 +40,11 @@ def nl(first: str, *filenames: str):
                     if line == "\n":
                         print()
                     else:
-                        print(str(count) + "\t" + line, end="")
+                        print(f"{str(count)}\t{line}", end="")
                         count += 1
                 print()
         except FileNotFoundError:
-            print("nl: ", filename, ": No such file or directory")
+            print(f"nl: {filename}: No such file or directory")
 
 
 def head(filename: str, n: int = 10):
@@ -55,7 +57,7 @@ def head(filename: str, n: int = 10):
                 else:
                     break
     except FileNotFoundError:
-        print("No such file: " + filename)
+        print(f"No such file: {filename}")
 
 
 def tail(filename: str, n: int = 10):
@@ -66,4 +68,4 @@ def tail(filename: str, n: int = 10):
             for line in cut:
                 print(line, end="")
     except FileNotFoundError:
-        print("No such file: " + filename)
+        print(f"No such file: {filename}")
