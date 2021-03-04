@@ -50,9 +50,8 @@ def nl(first: str, *filenames: str):
 def head(filename: str, n: int = 10):
     try:
         with open(filename) as file:
-            for line in file:
-                if n > 0:
-                    n -= 1
+            for index, line in enumerate(file):
+                if index > n - 1:
                     print(line, end="")
                 else:
                     break
