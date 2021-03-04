@@ -28,7 +28,7 @@ def wc(first: str, *args: str):
         total = {k: total.get(k, 0) + file_wc.get(k, 0) for k in total}
     print_stats(total, "total")
     if files_not_found:
-        print("Files not found: ", ", ".join(files_not_found))
+        print(f"Files not found: {', '.join(files_not_found)}")
 
 
 def nl(first: str, *filenames: str):
