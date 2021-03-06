@@ -55,7 +55,7 @@ class UncurryTest(unittest.TestCase):
         self.assertEqual("[1, 2, 3]", h(1, 2, 3))
 
     def test_uncurry_with_curried_args(self):
-        g = curry_explicit(f, 3)(1, 2)
+        g = curry_explicit(f, 3)(1)(2)
         h = uncurry_explicit(g, 1)
         self.assertEqual("[1, 2, 3]", h(3))
 
