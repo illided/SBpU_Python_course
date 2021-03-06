@@ -24,7 +24,7 @@ def uncurry_explicit(func: Callable, arity: int):
         output = func
         for i in range(arity):
             if not callable(output):
-                raise TypeError("Too many arguments provided")
+                raise TypeError("Declared arity was too big")
             output = output(args[i])
         return output
 
