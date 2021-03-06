@@ -13,7 +13,7 @@ def curry_explicit(func: Callable, arity: int):
     if arity == 0:
         return func
     elif arity < 0:
-        raise ValueError("Arity can't be negative")
+        raise TypeError("Arity can't be negative")
     return inner
 
 
