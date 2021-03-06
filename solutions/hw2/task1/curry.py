@@ -20,7 +20,7 @@ def curry_explicit(func: Callable, arity: int):
 def uncurry_explicit(func: Callable, arity: int):
     def inner(*args):
         if len(args) != arity:
-            raise ValueError("Wrong number of arguments or wrong arity")
+            raise TypeError("Wrong number of arguments or wrong arity")
         output = func
         for i in range(arity):
             if not callable(output):
