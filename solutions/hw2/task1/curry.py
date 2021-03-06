@@ -23,6 +23,8 @@ def uncurry_explicit(func: Callable, arity: int):
             raise ValueError("Wrong number of arguments or wrong arity")
         output = func
         for i in range(arity):
+            if not callable(output):
+                raise TypeError("Too many arguments provided")
             output = output(args[i])
         return output
 
