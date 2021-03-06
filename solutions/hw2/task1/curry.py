@@ -5,7 +5,7 @@ def curry_explicit(func: Callable, arity: int):
     def insert(arg, function):
         return lambda *args: function(arg, *args)
 
-    def inner(arg=None):
+    def inner(arg):
         if arity == 1:
             return insert(arg, func)()
         return curry_explicit(insert(arg, func), arity - 1)
