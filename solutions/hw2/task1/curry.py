@@ -6,11 +6,9 @@ def curry_explicit(func: Callable, arity: int):
         return lambda *args: function(arg, *args)
 
     def inner(arg):
-        if arity == 1:
-            return insert(arg, func)()
         return curry_explicit(insert(arg, func), arity - 1)
 
-    if arity == 0:
+    if arity == 0 or arity == 1:
         return func
     elif arity < 0:
         raise TypeError("Arity can't be negative")
