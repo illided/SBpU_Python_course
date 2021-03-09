@@ -1,8 +1,8 @@
 from typing import Callable
 
 
-def curry_explicit(func: Callable, arity: int):
-    def insert(arg, function):
+def curry_explicit(func: Callable, arity: int) -> Callable:
+    def insert(arg, function) -> Callable:
         return lambda *args: function(arg, *args)
 
     def inner(arg):
@@ -15,7 +15,7 @@ def curry_explicit(func: Callable, arity: int):
     return inner
 
 
-def uncurry_explicit(func: Callable, arity: int):
+def uncurry_explicit(func: Callable, arity: int) -> Callable:
     def inner(*args):
         if len(args) != arity:
             raise TypeError("Wrong number of arguments or wrong arity")
