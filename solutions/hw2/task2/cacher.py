@@ -48,6 +48,7 @@ def FunctionCacher(function=None, *, maximum_num_of_caches: int):
     if function:
         return _FunctionResultCacher(function, maximum_num_of_caches=maximum_num_of_caches)
     else:
+
         def wrapper(func):
             return _FunctionResultCacher(func, maximum_num_of_caches=maximum_num_of_caches)
 

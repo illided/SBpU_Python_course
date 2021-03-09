@@ -25,7 +25,7 @@ class CacherCashContentTests(unittest.TestCase):
 
     def test_with_two_positional_arguments(self):
         sum_two_numbers(4, 5)
-        self.assertEqual('Given: ((4, 5), {}) Returned: 9', sum_two_numbers.get_cache()[0])
+        self.assertEqual("Given: ((4, 5), {}) Returned: 9", sum_two_numbers.get_cache()[0])
 
 
 if __name__ == "__main__":
