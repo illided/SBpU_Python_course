@@ -22,15 +22,19 @@ class _FunctionResultCacher:
     cache: List[FunctionCache]
 
     def __init__(self, function=None, *, maximum_num_of_caches):
+        if maximum_num_of_caches < 1:
+            raise TypeError("Can't have empty cache")
+
         self.function = function
         self.maximum_num_of_caches = maximum_num_of_caches
         self.cache = []
+
         functools.update_wrapper(self, function)
 
     def __call__(self, *args, **kwargs):
         result = self.function(*args, **kwargs)
         if self.is_cache_full():
-            self.cache.pop()
+            self.cache.pop(0)
         self.cache.append(FunctionCache(args, kwargs, result))
         return result
 
