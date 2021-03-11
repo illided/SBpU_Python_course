@@ -57,11 +57,11 @@ class _FunctionCallsCacher:
     def __call__(self, *args, **kwargs):
         result = self.function(*args, **kwargs)
         if self.is_caching_enabled:
-            self.delete_last_cached_call_if_necessary()
+            self.delete_oldest_cached_call_if_necessary()
             self.add_to_cache(args, kwargs, result)
         return result
 
-    def delete_last_cached_call_if_necessary(self):
+    def delete_oldest_cached_call_if_necessary(self):
         if self.is_cache_full():
             self.cache.popitem(last=False)
 
