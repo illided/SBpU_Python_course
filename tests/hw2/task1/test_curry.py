@@ -82,6 +82,21 @@ class UncurryTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             uncurried_product_func(1, 2, 3, 4)
 
+    def test_with_zero_arity_correct_call(self):
+        f = curry_explicit(return_eight, 0)
+        g = uncurry_explicit(f, 0)
+        self.assertEqual(8, g())
+
+    def test_with_zero_arity_trying_to_call_two_times(self):
+        f0 = curry_explicit(lambda *xs: print(xs), 0)
+        with self.assertRaises(TypeError):
+            f0()()
+
+    def test_with_zero_arity_trying_to_call_with_argument(self):
+        f0 = curry_explicit(lambda *xs: print(xs), 0)
+        with self.assertRaises(TypeError):
+            f0(1)
+
 
 if __name__ == "__main__":
     unittest.main()
