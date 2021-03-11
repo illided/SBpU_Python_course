@@ -2,6 +2,18 @@ from typing import Callable
 
 
 def curry_explicit(func: Callable, arity: int) -> Callable:
+    """
+    Currying - transformation of a function from many arguments into a set
+    of functions, each of which is a function from one argument.
+    When called with function f return f_0 from the function set,
+    and f_0(arg) will return f_1.
+    Function f_arity will return f(*args).
+
+    :param func: function to curry
+    :param arity: arity of the function. Also determines the length of the set
+    :return: function f_0 from the description
+    """
+
     def insert(arg, function) -> Callable:
         return lambda *args: function(arg, *args)
 
@@ -16,6 +28,16 @@ def curry_explicit(func: Callable, arity: int) -> Callable:
 
 
 def uncurry_explicit(func: Callable, arity: int) -> Callable:
+    """
+    Inverse of curry explicit function.
+    When called on function f_i with declared arity n will return function
+    F with arity n-i.
+
+    :param func: function to uncurry
+    :param arity: arity declared previously
+    :return: function F from the description
+    """
+
     def inner(*args):
         if len(args) != arity:
             raise TypeError("Wrong number of arguments or wrong arity")
