@@ -38,9 +38,17 @@ def uncurry_explicit(func: Callable, arity: int) -> Callable:
     :return: function F from the description
     """
 
-    def inner(*args):
+    def wrapper(*args):
+        check_num_of_args(args)
+        return calculate_from_curried_func(args)
+
+    def check_num_of_args(args):
         if len(args) != arity:
             raise TypeError("Wrong number of arguments or wrong arity")
+
+    def calculate_from_curried_func(args):
+        if arity == 0:
+            return func()
         output = func
         for i in range(arity):
             if not callable(output):
@@ -48,4 +56,4 @@ def uncurry_explicit(func: Callable, arity: int) -> Callable:
             output = output(args[i])
         return output
 
-    return inner
+    return wrapper
