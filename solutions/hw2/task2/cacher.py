@@ -46,7 +46,7 @@ class _FunctionCallsCacher:
 
         functools.update_wrapper(self, function)
 
-    def check_for_working_statement(self):
+    def check_for_working_statement(self) -> bool:
         if self.maximum_num_of_caches < 0:
             raise TypeError("Maximum number of caches can't be negative")
         elif self.maximum_num_of_caches == 0:
@@ -76,11 +76,8 @@ class _FunctionCallsCacher:
             raise ValueError("Call with such arguments is not cached")
         return self.cache[FunctionCallArgumentsCache(args, kwargs)]
 
-    def is_such_call_cached(self, args, kwargs):
+    def is_such_call_cached(self, args, kwargs) -> bool:
         return FunctionCallArgumentsCache(args, kwargs) in self.cache
 
     def clear_cache(self):
         self.cache.clear()
-
-    def last_call_info(self):
-        return next(reversed(self.cache.items()))
