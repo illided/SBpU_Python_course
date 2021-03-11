@@ -80,7 +80,7 @@ class CacherTestsArbitraryNumOfCalls(unittest.TestCase):
     def test_trying_to_call_with_zero_maximum_num_of_cache(self):
         @FunctionCacher(maximum_num_of_caches=0)
         def multiply(a: int, b: int):
-            return a*b
+            return a * b
 
         multiply(1, 2)
         with self.assertRaises(ValueError):
