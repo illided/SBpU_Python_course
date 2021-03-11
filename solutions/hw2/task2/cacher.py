@@ -1,9 +1,9 @@
-from typing import List, Any, Tuple, Callable, FrozenSet
+from typing import Any, Tuple, Callable
 from collections import OrderedDict
 import functools
 
 
-def FunctionCacher(function=None, *, maximum_num_of_caches: int):
+def FunctionCacher(function=None, *, maximum_num_of_caches: int = 0):
     if function:
         return _FunctionCallsCacher(function, maximum_num_of_caches=maximum_num_of_caches)
 
@@ -33,24 +33,37 @@ class FunctionCallArgumentsCache:
 class _FunctionCallsCacher:
     function: Callable
     maximum_num_of_caches: int
-    cache: 'OrderedDict[FunctionCallArgumentsCache, Any]'
+    is_caching_enabled: bool
+    cache: "OrderedDict[FunctionCallArgumentsCache, Any]"
 
-    def __init__(self, function=None, *, maximum_num_of_caches=0):
-        if maximum_num_of_caches < 0:
-            raise TypeError("Can't have empty cache")
-
+    def __init__(self, function=None, *, maximum_num_of_caches):
         self.function = function
+
         self.maximum_num_of_caches = maximum_num_of_caches
+        self.check_for_maximum_num_of_cache()
+
         self.cache = OrderedDict()
+
         functools.update_wrapper(self, function)
+
+    def check_for_maximum_num_of_cache(self):
+        if self.maximum_num_of_caches < 0:
+            raise TypeError("Maximum number of caches can't be negative")
+        elif self.maximum_num_of_caches == 0:
+            self.is_caching_enabled = False
+        else:
+            self.is_caching_enabled = True
 
     def __call__(self, *args, **kwargs):
         result = self.function(*args, **kwargs)
-        if self.maximum_num_of_caches != 0:
-            if self.is_cache_full():
-                self.cache.popitem(last=False)
-            self.cache[FunctionCallArgumentsCache(args, kwargs)] = result
+        if self.is_caching_enabled:
+            self.add_to_cache(args, kwargs, result)
         return result
+
+    def add_to_cache(self, args: Tuple, kwargs: dict, result):
+        if self.is_cache_full():
+            self.cache.popitem(last=False)
+        self.cache[FunctionCallArgumentsCache(args, kwargs)] = result
 
     def is_cache_full(self) -> bool:
         return len(self.cache) == self.maximum_num_of_caches
