@@ -58,6 +58,16 @@ class CurryingTest(unittest.TestCase):
         curried_product_func = curry_explicit(multiply_all, 3)
         self.assertEqual(6, curried_product_func(1)(2)(3))
 
+    def test_with_zero_arity_trying_to_call_two_times(self):
+        f0 = curry_explicit(lambda *xs: print(xs), 0)
+        with self.assertRaises(TypeError):
+            f0()()
+
+    def test_with_zero_arity_trying_to_call_with_argument(self):
+        f0 = curry_explicit(lambda *xs: print(xs), 0)
+        with self.assertRaises(TypeError):
+            f0(1)
+
 
 class UncurryTest(unittest.TestCase):
     def test_with_no_curried_args(self):
@@ -86,16 +96,6 @@ class UncurryTest(unittest.TestCase):
         f = curry_explicit(return_eight, 0)
         g = uncurry_explicit(f, 0)
         self.assertEqual(8, g())
-
-    def test_with_zero_arity_trying_to_call_two_times(self):
-        f0 = curry_explicit(lambda *xs: print(xs), 0)
-        with self.assertRaises(TypeError):
-            f0()()
-
-    def test_with_zero_arity_trying_to_call_with_argument(self):
-        f0 = curry_explicit(lambda *xs: print(xs), 0)
-        with self.assertRaises(TypeError):
-            f0(1)
 
 
 if __name__ == "__main__":
