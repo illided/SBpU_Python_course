@@ -40,29 +40,32 @@ class _FunctionCallsCacher:
         self.function = function
 
         self.maximum_num_of_caches = maximum_num_of_caches
-        self.check_for_maximum_num_of_cache()
+        self.is_caching_enabled = self.check_for_working_statement()
 
         self.cache = OrderedDict()
 
         functools.update_wrapper(self, function)
 
-    def check_for_maximum_num_of_cache(self):
+    def check_for_working_statement(self):
         if self.maximum_num_of_caches < 0:
             raise TypeError("Maximum number of caches can't be negative")
         elif self.maximum_num_of_caches == 0:
-            self.is_caching_enabled = False
+            return False
         else:
-            self.is_caching_enabled = True
+            return True
 
     def __call__(self, *args, **kwargs):
         result = self.function(*args, **kwargs)
         if self.is_caching_enabled:
+            self.delete_last_cached_call_if_necessary()
             self.add_to_cache(args, kwargs, result)
         return result
 
-    def add_to_cache(self, args: Tuple, kwargs: dict, result):
+    def delete_last_cached_call_if_necessary(self):
         if self.is_cache_full():
             self.cache.popitem(last=False)
+
+    def add_to_cache(self, args: Tuple, kwargs: dict, result):
         self.cache[FunctionCallArgumentsCache(args, kwargs)] = result
 
     def is_cache_full(self) -> bool:
