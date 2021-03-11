@@ -14,17 +14,25 @@ def curry_explicit(func: Callable, arity: int) -> Callable:
     :return: function f_0 from the description
     """
 
+    def wrapper(arg=None):
+        if arity == 0:
+            if arg is None:
+                return func()
+            else:
+                raise TypeError("Function arity is 0, so no argument can be passed")
+        elif arity == 1:
+            if arg is None:
+                raise TypeError("Function arity is more than 0, but no argument passed")
+            else:
+                return func(arg)
+        return curry_explicit(insert(arg, func), arity - 1)
+
     def insert(arg, function) -> Callable:
         return lambda *args: function(arg, *args)
 
-    def inner(arg):
-        return curry_explicit(insert(arg, func), arity - 1)
-
-    if arity == 0 or arity == 1:
-        return func
-    elif arity < 0:
+    if arity < 0:
         raise TypeError("Arity can't be negative")
-    return inner
+    return wrapper
 
 
 def uncurry_explicit(func: Callable, arity: int) -> Callable:
