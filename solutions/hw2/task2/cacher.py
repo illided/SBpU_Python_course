@@ -55,6 +55,9 @@ class _FunctionCallsCacher:
             return True
 
     def __call__(self, *args, **kwargs):
+        if self.is_such_call_cached(args, kwargs):
+            return self.get_cached_result(*args, **kwargs)
+
         result = self.function(*args, **kwargs)
         if self.is_caching_enabled:
             self.delete_oldest_cached_call_if_necessary()
