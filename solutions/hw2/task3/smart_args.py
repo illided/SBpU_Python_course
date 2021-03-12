@@ -35,6 +35,11 @@ def get_evaluated_kwargs_name_function_pairs(keyword_defaults) -> Dict[str, Call
 
 
 class SmartArgs:
+    """
+    Allows more customization of the function arguments.
+    Replace the default with Isolated () to use a deep copy instead of the argument.
+    Set Evaluated(some_func) so that some_func is evaluated for the default argument value each time.
+    """
     evaluated_kwargs: Dict[str, Callable[[], Any]]
     isolated_kwargs: List[str]
 
