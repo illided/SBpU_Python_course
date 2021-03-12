@@ -40,6 +40,7 @@ class SmartArgs:
     Replace the default with Isolated () to use a deep copy instead of the argument.
     Set Evaluated(some_func) so that some_func is evaluated for the default argument value each time.
     """
+
     evaluated_kwargs: Dict[str, Callable[[], Any]]
     isolated_kwargs: List[str]
 
