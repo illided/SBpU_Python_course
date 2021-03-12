@@ -27,19 +27,11 @@ def get_keyword_defaults(function) -> Dict[str, Any]:
 
 
 def get_isolated_kwargs_names(keyword_defaults) -> List[str]:
-    isolated_kwargs_names = []
-    for key, value in keyword_defaults:
-        if isinstance(value, Isolated):
-            isolated_kwargs_names.append(key)
-    return isolated_kwargs_names
+    return [key for key, value in keyword_defaults if isinstance(value, Isolated)]
 
 
 def get_evaluated_kwargs_name_function_pairs(keyword_defaults) -> Dict[str, Callable[[], Any]]:
-    evaluated_kwargs_name_function_pairs = {}
-    for key, value in keyword_defaults:
-        if isinstance(value, Evaluated):
-            evaluated_kwargs_name_function_pairs[key] = value.eval_func
-    return evaluated_kwargs_name_function_pairs
+    return {key: value.eval_func for key, value in keyword_defaults if isinstance(value, Evaluated)}
 
 
 class SmartArgs:
