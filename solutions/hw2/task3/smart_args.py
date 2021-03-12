@@ -17,7 +17,7 @@ class Isolated:
     pass
 
 
-def get_keyword_defaults(function) -> dict:
+def get_keyword_defaults(function) -> Dict[str, Any]:
     signature = inspect.signature(function)
     return {
         k: v.default
@@ -34,7 +34,7 @@ def get_isolated_kwargs_names(keyword_defaults) -> List[str]:
     return isolated_kwargs_names
 
 
-def get_evaluated_kwargs_name_function_pairs(keyword_defaults) -> Dict[str, Callable]:
+def get_evaluated_kwargs_name_function_pairs(keyword_defaults) -> Dict[str, Callable[[], Any]]:
     evaluated_kwargs_name_function_pairs = {}
     for key, value in keyword_defaults:
         if isinstance(value, Evaluated):
@@ -43,7 +43,7 @@ def get_evaluated_kwargs_name_function_pairs(keyword_defaults) -> Dict[str, Call
 
 
 class SmartArgs:
-    evaluated_kwargs: dict
+    evaluated_kwargs: Dict[str, Callable[[], Any]]
     isolated_kwargs: List[str]
 
     def __init__(self, function: Callable):
