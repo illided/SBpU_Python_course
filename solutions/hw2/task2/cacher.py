@@ -19,7 +19,7 @@ class FunctionCallArgumentsCache:
 
     def __init__(self, args: Tuple, kwargs: dict):
         self.nameless_args = args
-        self.named_args = frozenset(kwargs.items())
+        self.named_args = frozenset(sorted(kwargs.items()))
 
     def __hash__(self):
         return hash((self.named_args, self.nameless_args))
