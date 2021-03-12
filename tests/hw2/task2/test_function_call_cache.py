@@ -46,11 +46,11 @@ class FunctionCallArgumentsTestHash(unittest.TestCase):
 
     def test_not_equal_hashes_with_same_arguments_names_but_different_values(self):
         call, different_call = create_two_caches((), {"a": 2, "b": 3}, (), {"a": 3, "b": 4})
-        self.assertNotEqual(call, different_call)
+        self.assertNotEqual(hash(call), hash(different_call))
 
     def test_not_equal_hashes_with_different_arguments_names(self):
         call, different_call = create_two_caches((), {"a": 2, "b": 3}, (), {"c": 2, "d": 3})
-        self.assertNotEqual(call, different_call)
+        self.assertNotEqual(hash(call), hash(different_call))
 
     def test_equal_hashes_with_named_args_in_different_positions(self):
         call, call_reversed = create_two_caches((), {"a": 2, "b": 3}, (), {"b": 3, "a": 2})
