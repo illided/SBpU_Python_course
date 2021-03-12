@@ -51,7 +51,7 @@ class MixedUsageTest(unittest.TestCase):
         with self.assertRaises(Exception):
 
             @SmartArgs
-            def example(*, a=Evaluated(Isolated())):
+            def example(*, a=Evaluated(Isolated)):
                 return a
 
     def test_trying_to_use_both_operations_isolation_first(self):

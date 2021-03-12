@@ -1,6 +1,4 @@
 from typing import Callable, List
-from collections import OrderedDict
-import functools
 import copy
 import inspect
 
@@ -8,7 +6,9 @@ import inspect
 class Evaluated:
     eval_func: Callable
 
-    def __init__(self, eval_func):
+    def __init__(self, eval_func: Callable):
+        if eval_func is Isolated:
+            raise TypeError("Can't use evaluated and isolated together")
         self.eval_func = eval_func
 
 
