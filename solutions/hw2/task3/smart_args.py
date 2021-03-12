@@ -4,9 +4,7 @@ import inspect
 
 
 class Evaluated:
-    eval_func: Callable[[], Any]
-
-    def __init__(self, eval_func: Callable):
+    def __init__(self, eval_func: Callable[[], Any]):
         self.eval_func = eval_func
         self.check_for_mixed_usage()
 
@@ -45,7 +43,6 @@ def get_evaluated_kwargs_name_function_pairs(keyword_defaults) -> Dict[str, Call
 
 
 class SmartArgs:
-    function: Callable
     evaluated_kwargs: dict
     isolated_kwargs: List[str]
 
