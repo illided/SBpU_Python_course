@@ -1,10 +1,10 @@
-from typing import Callable, List
+from typing import Callable, List, Dict, Any
 import copy
 import inspect
 
 
 class Evaluated:
-    eval_func: Callable
+    eval_func: Callable[[], Any]
 
     def __init__(self, eval_func: Callable):
         self.eval_func = eval_func
@@ -28,7 +28,7 @@ def get_keyword_defaults(function) -> dict:
     }
 
 
-def get_isolated_kwargs_names(keyword_defaults):
+def get_isolated_kwargs_names(keyword_defaults) -> List[str]:
     isolated_kwargs_names = []
     for key, value in keyword_defaults:
         if isinstance(value, Isolated):
@@ -36,7 +36,7 @@ def get_isolated_kwargs_names(keyword_defaults):
     return isolated_kwargs_names
 
 
-def get_evaluated_kwargs_name_function_pairs(keyword_defaults):
+def get_evaluated_kwargs_name_function_pairs(keyword_defaults) -> Dict[str, Callable]:
     evaluated_kwargs_name_function_pairs = {}
     for key, value in keyword_defaults:
         if isinstance(value, Evaluated):
