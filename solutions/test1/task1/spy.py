@@ -5,7 +5,6 @@ from typing import List, Dict, Any, Callable, Type
 
 
 class Spy:
-    launch_times: "List[Type[datetime]]"
     kwargs_history: List[Dict[str, Any]]
 
     def __init__(self, function: Callable):
