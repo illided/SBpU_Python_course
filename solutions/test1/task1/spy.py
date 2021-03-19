@@ -5,10 +5,12 @@ from typing import List, Dict, Any, Callable
 
 
 class Spy:
-    launch_times: List[type(datetime)] = []
-    kwargs_history: List[Dict[str, Any]] = []
+    launch_times: List[type(datetime)]
+    kwargs_history: List[Dict[str, Any]]
 
     def __init__(self, function: Callable):
+        self.kwargs_history = []
+        self.launch_times = []
         self.function = function
         functools.update_wrapper(self, function)
 
