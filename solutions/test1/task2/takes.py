@@ -19,7 +19,6 @@ class TakesImpl:
         self.function = function
         self.type_list = type_list
         self.type_dict = dict(zip(function.__code__.co_varnames, type_list))
-        print(self.type_dict)
 
     def __call__(self, *args, **kwargs):
         for i in range(len(args)):

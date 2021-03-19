@@ -1,14 +1,14 @@
 from takes import *
 
 
-@takes(types=[int, int])
-def return_sum(x, y, z=6):
-    return x + y + z
-
-
-def main():
-    return_sum(8, 0, z=9)
+@takes(types=[int, str])
+def f(a, b):
+    print(f"Successful call with a={a} and b={b}")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        f(1, 2)
+    except TypeError as e:
+        print(e)
+    f(1, "ab")
