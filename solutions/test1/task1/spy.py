@@ -1,17 +1,18 @@
 import datetime
 from copy import deepcopy
 import functools
-from typing import List, Dict, Any, Callable
+from typing import List, Dict, Any, Callable, Type
 
 
 class Spy:
-    launch_times: List[type(datetime)]
+    launch_times: List[Type[datetime]]
     kwargs_history: List[Dict[str, Any]]
 
     def __init__(self, function: Callable):
         self.kwargs_history = []
         self.launch_times = []
         self.function = function
+        self.__name__ = function.__name__
         functools.update_wrapper(self, function)
 
     def __call__(self, *args, **kwargs):
