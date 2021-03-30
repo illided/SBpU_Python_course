@@ -1,4 +1,4 @@
-from takes import *
+from takes import takes
 
 
 @takes(types=[int, str])
