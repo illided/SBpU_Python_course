@@ -1,4 +1,4 @@
-from spy import *
+from spy import Spy, print_usage_statistic
 
 
 @Spy
