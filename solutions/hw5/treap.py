@@ -15,12 +15,18 @@ class Node:
 
     def inorder(self) -> list:
         values = []
-        if self.left_child is not None:
+        if self.have_left_child():
             values.extend(self.left_child.inorder())
         values.append(self.value)
-        if self.right_child is not None:
+        if self.have_right_child():
             values.extend(self.right_child.inorder())
         return values
+
+    def have_left_child(self):
+        return self.left_child is not None
+
+    def have_right_child(self):
+        return self.right_child is not None
 
 
 def split(node: Node, key):
@@ -104,13 +110,13 @@ class Deramida(MutableMapping):
 
     def __iter__(self) -> Iterator:
         root_values = []
-        if len(self) != 0:
+        if self:
             root_values = self.root.inorder()
         for val in root_values:
             yield val
 
     def __reversed__(self) -> Iterator:
         root_values = []
-        if len(self) != 0:
+        if self:
             root_values = self.root.inorder()
         return reversed(root_values)
