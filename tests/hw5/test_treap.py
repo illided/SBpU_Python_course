@@ -92,10 +92,10 @@ class TestDeramida(TestCase):
 
     def test_get_length_where_all_items_deleted(self):
         der = Deramida()
-        for i in range(1,100):
+        for i in range(1, 100):
             der[i] = i
             der[-1 * i] = i
-        for i in range(1,100):
+        for i in range(1, 100):
             del der[i]
             del der[-1 * i]
         self.assertEqual(0, len(der))
