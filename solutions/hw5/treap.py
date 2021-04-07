@@ -52,11 +52,12 @@ def merge(first: Node, second: Node):
 
 
 class Deramida(MutableMapping):
-    root: Node = None
+    root: Node
     __size: int
 
     def __init__(self):
         self.__size = 0
+        self.root = None
 
     def __contains__(self, key):
         try:
