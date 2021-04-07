@@ -44,17 +44,17 @@ def split(node: Node, key):
         return node.left_child, node.right_child
 
 
-def merge(first: Node, second: Node):
-    if first is None:
-        return second
-    if second is None:
-        return first
-    if first.priority > second.priority:
-        first.right_child = merge(first.right_child, second)
-        return first
+def merge(small_keys_s_tree: Node, big_keys_s_tree: Node):
+    if small_keys_s_tree is None:
+        return big_keys_s_tree
+    if big_keys_s_tree is None:
+        return small_keys_s_tree
+    if small_keys_s_tree.priority > big_keys_s_tree.priority:
+        small_keys_s_tree.right_child = merge(small_keys_s_tree.right_child, big_keys_s_tree)
+        return small_keys_s_tree
     else:
-        second.left_child = merge(first, second.left_child)
-        return second
+        big_keys_s_tree.left_child = merge(small_keys_s_tree, big_keys_s_tree.left_child)
+        return big_keys_s_tree
 
 
 class Deramida(MutableMapping):
