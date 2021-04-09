@@ -96,7 +96,7 @@ class Deramida(MutableMapping, Generic[CT]):
     def __contains__(self, key: Any) -> bool:
         return self.find_node(key, lambda x: x.key == key) is not None
 
-    def __setitem__(self, key: Generic[CT], value: Any) -> None:
+    def __setitem__(self, key: CT, value: Any) -> None:
         if key not in self:
             self.__size += 1
         left, right = self.split(self.root, key)
