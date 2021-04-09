@@ -38,7 +38,7 @@ class TestDeramida(TestCase):
         der[0] = "Hello"
         del der[0]
         with self.assertRaises(KeyError):
-            a = der[0]
+            der[0]
 
     def test_delete_one_item_twice(self):
         der = Deramida()
@@ -55,7 +55,7 @@ class TestDeramida(TestCase):
         for key in keys:
             del der[key]
             with self.assertRaises(KeyError):
-                a = der[key]
+                der[key]
 
     def test_delete_many_items_twice(self):
         der = Deramida()
@@ -111,6 +111,10 @@ class TestDeramida(TestCase):
         del der[0]
         self.assertFalse(0 in der)
 
+    def test_iteration_no_items(self):
+        der = Deramida()
+        self.assertEqual([], [i for i in der])
+
     def test_iteration_one_item(self):
         der = Deramida()
         der[0] = "Hello"
@@ -124,6 +128,10 @@ class TestDeramida(TestCase):
             der[key] = str(key)
         items = [item for item in der]
         self.assertEqual(["-2", "-1", "1", "2"], items)
+
+    def test_reversed_iteration_no_items(self):
+        der = Deramida()
+        self.assertEqual([], [i for i in der])
 
     def test_reversed_iteration_one_item(self):
         der = Deramida()
@@ -140,8 +148,10 @@ class TestDeramida(TestCase):
         self.assertEqual(["2", "1", "-1", "-2"], items)
 
     def test_basic_balance(self):
-        der = Deramida()
-        for i in range(100):
-            der[i] = i
-            der[-1 * i] = i
-        self.assertFalse(der.root.right_child is None or der.root.left_child is None)
+        for k in range(1000):
+            der = Deramida()
+            for i in range(100):
+                der[i] = i
+                der[-1 * i] = i
+            nodes = der.root.inorder()
+            self.assertFalse(all([node.left_child is None or node.right_child is None for node in nodes]))
