@@ -6,10 +6,11 @@ from abc import ABCMeta, abstractmethod
 
 class Comparable(metaclass=ABCMeta):
     @abstractmethod
-    def __lt__(self, other: Any) -> bool: ...
+    def __lt__(self, other: Any) -> bool:
+        ...
 
 
-CT = TypeVar('CT', bound=Comparable)
+CT = TypeVar("CT", bound=Comparable)
 
 
 class Node:
@@ -17,11 +18,12 @@ class Node:
     Information unit of deramida.
     Holds key, value, priority and its children.
     """
+
     priority: int
     key: CT
     value: Any
-    left_child: Optional['Node']
-    right_child: Optional['Node']
+    left_child: Optional["Node"]
+    right_child: Optional["Node"]
 
     def __init__(self, key: CT, value: Any):
         self.key = key
@@ -30,7 +32,7 @@ class Node:
         self.right_child = None
         self.priority = randint(0, 100)
 
-    def inorder(self) -> Iterator['Node']:
+    def inorder(self) -> Iterator["Node"]:
         nodes = []
         if self.have_left_child():
             nodes.extend(list(self.left_child.inorder()))
@@ -39,7 +41,7 @@ class Node:
             nodes.extend(list(self.right_child.inorder()))
         return iter(nodes)
 
-    def reverse_inorder(self) -> Iterator['Node']:
+    def reverse_inorder(self) -> Iterator["Node"]:
         nodes = []
         if self.have_right_child():
             nodes.extend(list(self.right_child.reverse_inorder()))
@@ -61,6 +63,7 @@ class Deramida(MutableMapping):
     Mostly it behaves like a dict, but keys must be comparable.
     When iterating through deramida, items will be returned in ascending order of keys.
     """
+
     root: Optional[Node]
     __size: int
 
