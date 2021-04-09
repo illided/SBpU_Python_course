@@ -9,6 +9,10 @@ class Comparable(metaclass=ABCMeta):
     def __lt__(self, other: Any) -> bool:
         ...
 
+    @abstractmethod
+    def __gt__(self, other: Any) -> bool:
+        ...
+
 
 CT = TypeVar("CT", bound=Comparable)
 
@@ -67,7 +71,7 @@ class Deramida(MutableMapping):
     root: Optional[Node]
     __size: int
 
-    def split(self, node: Node, key: CT) -> Tuple[Optional[Node], Optional[Node]]:
+    def split(self, node: Optional[Node], key: CT) -> Tuple[Optional[Node], Optional[Node]]:
         if node is None:
             return None, None
         elif key > node.key:
@@ -80,7 +84,7 @@ class Deramida(MutableMapping):
             return left, node
         return node.left_child, node.right_child
 
-    def merge(self, small_keys_s_tree: Node, big_keys_s_tree: Node) -> Node:
+    def merge(self, small_keys_s_tree: Optional[Node], big_keys_s_tree: Optional[Node]) -> Node:
         if small_keys_s_tree is None:
             return big_keys_s_tree
         if big_keys_s_tree is None:
@@ -95,7 +99,9 @@ class Deramida(MutableMapping):
         self.__size = 0
         self.root = None
 
-    def __contains__(self, key: CT) -> bool:
+    def __contains__(self, key: Any) -> bool:
+        if key is not CT:
+            raise TypeError("Key must be comparable")
         return self.find_node(key, lambda x: x.key == key) is not None
 
     def __setitem__(self, key: CT, value: Any) -> None:
