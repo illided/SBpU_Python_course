@@ -126,8 +126,7 @@ class Deramida(MutableMapping, Generic[CT]):
         node = self.find_node(key, lambda x: x.key == key)
         if node is None:
             raise KeyError(f"No key for value {key}")
-        else:
-            return node.value
+        return node.value
 
     def __len__(self) -> int:
         return self.__size
