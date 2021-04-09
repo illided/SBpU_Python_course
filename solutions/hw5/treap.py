@@ -100,8 +100,6 @@ class Deramida(MutableMapping):
         self.root = None
 
     def __contains__(self, key: Any) -> bool:
-        if key is not CT:
-            raise TypeError("Key must be comparable")
         return self.find_node(key, lambda x: x.key == key) is not None
 
     def __setitem__(self, key: CT, value: Any) -> None:
