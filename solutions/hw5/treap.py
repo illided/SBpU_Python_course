@@ -1,5 +1,5 @@
 from collections import MutableMapping
-from typing import Iterator, Callable, Any, Tuple, Optional, TypeVar
+from typing import Iterator, Callable, Any, Tuple, Optional, TypeVar, Generic
 from random import randint
 from abc import ABCMeta, abstractmethod
 
@@ -17,7 +17,7 @@ class Comparable(metaclass=ABCMeta):
 CT = TypeVar("CT", bound=Comparable)
 
 
-class Node:
+class Node(Generic[CT]):
     """
     Information unit of deramida.
     Holds key, value, priority and its children.
@@ -38,30 +38,24 @@ class Node:
 
     def inorder(self) -> Iterator["Node"]:
         nodes = []
-        if self.have_left_child():
+        if self.left_child is not None:
             nodes.extend(list(self.left_child.inorder()))
         nodes.append(self)
-        if self.have_right_child():
+        if self.right_child is not None:
             nodes.extend(list(self.right_child.inorder()))
         return iter(nodes)
 
     def reverse_inorder(self) -> Iterator["Node"]:
         nodes = []
-        if self.have_right_child():
+        if self.right_child is not None:
             nodes.extend(list(self.right_child.reverse_inorder()))
         nodes.append(self)
-        if self.have_left_child():
+        if self.left_child is not None:
             nodes.extend(list(self.left_child.reverse_inorder()))
         return iter(nodes)
 
-    def have_left_child(self) -> bool:
-        return self.left_child is not None
 
-    def have_right_child(self) -> bool:
-        return self.right_child is not None
-
-
-class Deramida(MutableMapping):
+class Deramida(MutableMapping, Generic[CT]):
     """
     Deramida is a data structure that combines a binary search tree and a binary heap.
     Mostly it behaves like a dict, but keys must be comparable.
@@ -84,7 +78,7 @@ class Deramida(MutableMapping):
             return left, node
         return node.left_child, node.right_child
 
-    def merge(self, small_keys_s_tree: Optional[Node], big_keys_s_tree: Optional[Node]) -> Node:
+    def merge(self, small_keys_s_tree: Optional[Node], big_keys_s_tree: Optional[Node]) -> Optional[Node]:
         if small_keys_s_tree is None:
             return big_keys_s_tree
         if big_keys_s_tree is None:
@@ -102,7 +96,7 @@ class Deramida(MutableMapping):
     def __contains__(self, key: Any) -> bool:
         return self.find_node(key, lambda x: x.key == key) is not None
 
-    def __setitem__(self, key: CT, value: Any) -> None:
+    def __setitem__(self, key: Generic[CT], value: Any) -> None:
         if key not in self:
             self.__size += 1
         left, right = self.split(self.root, key)
@@ -139,13 +133,13 @@ class Deramida(MutableMapping):
         return self.__size
 
     def __iter__(self) -> Iterator[Node]:
-        if self:
+        if self.root is not None:
             for node in self.root.inorder():
                 yield node.value
         return iter(())
 
     def __reversed__(self) -> Iterator[Node]:
-        if self:
+        if self.root is not None:
             for node in self.root.reverse_inorder():
                 yield node.value
         return iter(())
