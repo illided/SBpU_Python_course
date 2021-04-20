@@ -24,7 +24,6 @@ class MyTestCase(unittest.TestCase):
 
         def stressTest(self):
             tasks = [self.increment for i in range(1000)] + [self.decrement for i in range(1000)]
-            random.seed(42)
             shuffle(tasks)
             for task in tasks:
                 task()
