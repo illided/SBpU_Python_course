@@ -20,14 +20,11 @@ class MyTestCase(unittest.TestCase):
 
     def test_text_with_ellipsis(self):
         stat = FileStatistic("some_text.txt")
-        self.assertEqual([('hello', 4),
-                          ('goodbye', 3),
-                          ('i', 1),
-                          ('just', 1),
-                          ('love', 1),
-                          ('saying', 1)], stat.get_most_common())
+        self.assertEqual(
+            [("hello", 4), ("goodbye", 3), ("i", 1), ("just", 1), ("love", 1), ("saying", 1)], stat.get_most_common()
+        )
         self.assertEqual(7, stat.get_num_of_sentences())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
