@@ -5,7 +5,7 @@ import re
 
 class FileStatistic:
     words: Counter
-    wordRegex: Pattern[str] = r"[А-Яа-яA-Za-z]+"
+    wordRegex: Pattern[str] = re.compile("[А-Яа-яA-Za-z]+")
     punctuation: List[str] = ["!", "?", "...", "."]
     punc_count: List[int]
 
