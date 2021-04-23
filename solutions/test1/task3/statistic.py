@@ -1,12 +1,12 @@
 from collections import Counter
-from typing import List, Tuple
+from typing import List, Tuple, Pattern
 import re
 
 
 class FileStatistic:
     words: Counter
-    wordRegex = r"[А-Яа-яA-Za-z]+"
-    punctuation = ["!", "?", "...", "."]
+    wordRegex: Pattern[str] = r"[А-Яа-яA-Za-z]+"
+    punctuation: List[str] = ["!", "?", "...", "."]
     punc_count: List[int]
 
     def __init__(self, file_path: str):
